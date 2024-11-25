@@ -5,6 +5,15 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDataContext>();
 
+builder.Services.AddCors(
+    options => 
+        options.AddPolicy("Acesso Total",
+            configs => configs
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod())
+        );
+
 var app = builder.Build();
 
 
@@ -55,21 +64,55 @@ app.MapPost("/api/tarefas/cadastrar", ([FromServices] AppDataContext ctx, [FromB
 });
 
 //PUT: http://localhost:5273/tarefas/alterar/{id}
-app.MapPut("/api/tarefas/alterar/{id}", ([FromServices] AppDataContext ctx, [FromRoute] string id) =>
+app.MapPut("/api/tarefas/alterar/{id}", ([FromServices] AppDataContext ctx, [FromRoute] string id, [FromBody] Tarefa tarefaAtualizada) =>
 {
-    //Implementar a alteração do status da tarefa
+    
+    Tarefa? tarefa = ctx.Tarefas.Find(id);
+    if (tarefa == null)
+    {
+        return Results.NotFound();
+    }
+    
+    if (!string.IsNullOrEmpty(tarefaAtualizada.Titulo)) tarefa.Titulo = tarefaAtualizada.Titulo;
+    if (!string.IsNullOrEmpty(tarefaAtualizada.Descricao)) tarefa.Descricao = tarefaAtualizada.Descricao;
+    if (!string.IsNullOrEmpty(tarefaAtualizada.Status)) tarefa.Status = tarefaAtualizada.Status;
+    
+    ctx.Tarefas.Update(tarefa);
+    ctx.SaveChanges();
+    
+    return Results.Ok("Tarefa atualizada com sucesso");
 });
 
 //GET: http://localhost:5273/tarefas/naoconcluidas
 app.MapGet("/api/tarefas/naoconcluidas", ([FromServices] AppDataContext ctx) =>
 {
-    //Implementar a listagem de tarefas não concluídas
+    if (ctx.Tarefas.Any())
+    {
+        return Results.Ok(
+            ctx.Tarefas
+                .Include(t => t.Categoria)
+                .Where(x => x.Status == "Concluido")
+                .ToList()
+            );
+    }
+    return Results.NotFound("Nenhuma tarefa encontrada");
 });
 
 //GET: http://localhost:5273/tarefas/concluidas
 app.MapGet("/api/tarefas/concluidas", ([FromServices] AppDataContext ctx) =>
 {
-    //Implementar a listagem de tarefas concluídas
+    if (ctx.Tarefas.Any())
+    {
+        return Results.Ok(
+            ctx.Tarefas
+                .Include(t => t.Categoria)
+                .Where(x => x.Status == "Concluido")
+                .ToList()
+        );
+    }
+    return Results.NotFound("Nenhuma tarefa encontrada");
 });
+
+app.UseCors("Acesso Total");
 
 app.Run();
