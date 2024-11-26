@@ -2,7 +2,7 @@
 
 public class Categoria
 {
-    public string CategoriaId { get; set; } = Guid.NewGuid().ToString();
+    public int CategoriaId { get; set; } 
     public string? Nome { get; set; }
     public DateTime CriadoEm { get; set; } = DateTime.Now;
 }

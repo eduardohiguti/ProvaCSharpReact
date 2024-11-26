@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20241125213611_APITeste")]
-    partial class APITeste
+    [Migration("20241126003331_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,8 +22,9 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Categoria", b =>
                 {
-                    b.Property<string>("CategoriaId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoriaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("TEXT");
@@ -38,31 +39,32 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            CategoriaId = "bfe4e7dc-81e4-4e47-a67b-d4fbf3e124bd",
-                            CriadoEm = new DateTime(2024, 11, 26, 18, 36, 10, 724, DateTimeKind.Local).AddTicks(9456),
+                            CategoriaId = 1,
+                            CriadoEm = new DateTime(2024, 11, 26, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1273),
                             Nome = "Trabalho"
                         },
                         new
                         {
-                            CategoriaId = "6d091456-5a2f-4b5a-98fc-f1a3b50a627d",
-                            CriadoEm = new DateTime(2024, 11, 27, 18, 36, 10, 724, DateTimeKind.Local).AddTicks(9469),
+                            CategoriaId = 2,
+                            CriadoEm = new DateTime(2024, 11, 27, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1280),
                             Nome = "Estudos"
                         },
                         new
                         {
-                            CategoriaId = "39be53a2-fc09-4b6a-bafa-18a6a23c8f6e",
-                            CriadoEm = new DateTime(2024, 11, 28, 18, 36, 10, 724, DateTimeKind.Local).AddTicks(9477),
+                            CategoriaId = 3,
+                            CriadoEm = new DateTime(2024, 11, 28, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1281),
                             Nome = "Lazer"
                         });
                 });
 
             modelBuilder.Entity("API.Models.Tarefa", b =>
                 {
-                    b.Property<string>("TarefaId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("TarefaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("CategoriaId")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("TEXT");
@@ -85,27 +87,27 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            TarefaId = "6a8b3e4d-5e4e-4f7e-bdc9-9181e456ad0e",
-                            CategoriaId = "bfe4e7dc-81e4-4e47-a67b-d4fbf3e124bd",
-                            CriadoEm = new DateTime(2024, 12, 2, 18, 36, 10, 724, DateTimeKind.Local).AddTicks(9584),
+                            TarefaId = 1,
+                            CategoriaId = 1,
+                            CriadoEm = new DateTime(2024, 12, 2, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1386),
                             Descricao = "Terminar relatório para reunião",
                             Status = "Não iniciada",
                             Titulo = "Concluir relatório"
                         },
                         new
                         {
-                            TarefaId = "2f1b7dc1-3b9a-4e1a-a389-7f5d2f1c8f3e",
-                            CategoriaId = "6d091456-5a2f-4b5a-98fc-f1a3b50a627d",
-                            CriadoEm = new DateTime(2024, 11, 28, 18, 36, 10, 724, DateTimeKind.Local).AddTicks(9593),
+                            TarefaId = 2,
+                            CategoriaId = 2,
+                            CriadoEm = new DateTime(2024, 11, 28, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1388),
                             Descricao = "Preparar-se para a aula de Angular",
                             Status = "Não iniciada",
                             Titulo = "Estudar Angular"
                         },
                         new
                         {
-                            TarefaId = "e5d4a7b9-1f9e-4c4a-ae3b-5b7c1a9d2e3f",
-                            CategoriaId = "39be53a2-fc09-4b6a-bafa-18a6a23c8f6e",
-                            CriadoEm = new DateTime(2024, 12, 9, 18, 36, 10, 724, DateTimeKind.Local).AddTicks(9600),
+                            TarefaId = 3,
+                            CategoriaId = 3,
+                            CriadoEm = new DateTime(2024, 12, 9, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1390),
                             Descricao = "Dar um passeio relaxante no parque",
                             Status = "Não iniciada",
                             Titulo = "Passeio no parque"

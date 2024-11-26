@@ -17,7 +17,8 @@ namespace API.Migrations
                 name: "Categorias",
                 columns: table => new
                 {
-                    CategoriaId = table.Column<string>(type: "TEXT", nullable: false),
+                    CategoriaId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Nome = table.Column<string>(type: "TEXT", nullable: true),
                     CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
@@ -30,11 +31,12 @@ namespace API.Migrations
                 name: "Tarefas",
                 columns: table => new
                 {
-                    TarefaId = table.Column<string>(type: "TEXT", nullable: false),
+                    TarefaId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Titulo = table.Column<string>(type: "TEXT", nullable: true),
                     Descricao = table.Column<string>(type: "TEXT", nullable: true),
                     CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CategoriaId = table.Column<string>(type: "TEXT", nullable: true),
+                    CategoriaId = table.Column<int>(type: "INTEGER", nullable: true),
                     Status = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -52,9 +54,9 @@ namespace API.Migrations
                 columns: new[] { "CategoriaId", "CriadoEm", "Nome" },
                 values: new object[,]
                 {
-                    { "39be53a2-fc09-4b6a-bafa-18a6a23c8f6e", new DateTime(2024, 11, 28, 18, 18, 23, 365, DateTimeKind.Local).AddTicks(773), "Lazer" },
-                    { "6d091456-5a2f-4b5a-98fc-f1a3b50a627d", new DateTime(2024, 11, 27, 18, 18, 23, 365, DateTimeKind.Local).AddTicks(765), "Estudos" },
-                    { "bfe4e7dc-81e4-4e47-a67b-d4fbf3e124bd", new DateTime(2024, 11, 26, 18, 18, 23, 365, DateTimeKind.Local).AddTicks(753), "Trabalho" }
+                    { 1, new DateTime(2024, 11, 26, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1273), "Trabalho" },
+                    { 2, new DateTime(2024, 11, 27, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1280), "Estudos" },
+                    { 3, new DateTime(2024, 11, 28, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1281), "Lazer" }
                 });
 
             migrationBuilder.InsertData(
@@ -62,9 +64,9 @@ namespace API.Migrations
                 columns: new[] { "TarefaId", "CategoriaId", "CriadoEm", "Descricao", "Status", "Titulo" },
                 values: new object[,]
                 {
-                    { "2f1b7dc1-3b9a-4e1a-a389-7f5d2f1c8f3e", "6d091456-5a2f-4b5a-98fc-f1a3b50a627d", new DateTime(2024, 11, 28, 18, 18, 23, 365, DateTimeKind.Local).AddTicks(920), "Preparar-se para a aula de Angular", "Não iniciada", "Estudar Angular" },
-                    { "6a8b3e4d-5e4e-4f7e-bdc9-9181e456ad0e", "bfe4e7dc-81e4-4e47-a67b-d4fbf3e124bd", new DateTime(2024, 12, 2, 18, 18, 23, 365, DateTimeKind.Local).AddTicks(912), "Terminar relatório para reunião", "Não iniciada", "Concluir relatório" },
-                    { "e5d4a7b9-1f9e-4c4a-ae3b-5b7c1a9d2e3f", "39be53a2-fc09-4b6a-bafa-18a6a23c8f6e", new DateTime(2024, 12, 9, 18, 18, 23, 365, DateTimeKind.Local).AddTicks(928), "Dar um passeio relaxante no parque", "Não iniciada", "Passeio no parque" }
+                    { 1, 1, new DateTime(2024, 12, 2, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1386), "Terminar relatório para reunião", "Não iniciada", "Concluir relatório" },
+                    { 2, 2, new DateTime(2024, 11, 28, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1388), "Preparar-se para a aula de Angular", "Não iniciada", "Estudar Angular" },
+                    { 3, 3, new DateTime(2024, 12, 9, 21, 33, 31, 156, DateTimeKind.Local).AddTicks(1390), "Dar um passeio relaxante no parque", "Não iniciada", "Passeio no parque" }
                 });
 
             migrationBuilder.CreateIndex(
